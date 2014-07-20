@@ -14,3 +14,11 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+#import "WXHLGlobalUICommon.h"
+
+//设备物理高度
+#define ScreenHeight [UIScreen mainScreen].bounds.size.height
+//设备物理宽度
+#define ScreenWidth [UIScreen mainScreen].bounds.size.width
+

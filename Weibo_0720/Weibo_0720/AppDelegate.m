@@ -7,18 +7,45 @@
 //
 
 #import "AppDelegate.h"
-
+#import "MainViewController.h"
+#import "DDMenuController.h"
+#import "LeftViewController.h"
+#import "RightViewController.h"
+#import "SinaWeibo.h"
+#import "CONSTS.h"
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    _mainCtrl = [[MainViewController alloc] init];
+    LeftViewController *leftCtrl =[[LeftViewController alloc] init];
+    RightViewController *rightCtrl = [[RightViewController alloc] init];
+    DDMenuController *menuCtrl = [[DDMenuController alloc] initWithRootViewController:_mainCtrl];
+    menuCtrl.leftViewController = leftCtrl;
+    menuCtrl.rightViewController = rightCtrl;
+
+    
+    self.window.rootViewController = menuCtrl;
+    [menuCtrl release];
+    [self _initWeibo];
     return YES;
 }
 
+-(void)_initWeibo{
+    _sinaweibo = [[SinaWeibo alloc] initWithAppKey:kAppKey appSecret:kAppSecret appRedirectURI:kAppRedirectURI andDelegate:_mainCtrl];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *sinaweiboInfo = [defaults objectForKey:@"SinaWeiboAuthData"];
+    if ([sinaweiboInfo objectForKey:@"AccessTokenKey"] && [sinaweiboInfo objectForKey:@"ExpirationDateKey"] && [sinaweiboInfo objectForKey:@"UserIDKey"])
+    {
+    _sinaweibo.accessToken = [sinaweiboInfo objectForKey:@"AccessTokenKey"];
+        _sinaweibo.expirationDate = [sinaweiboInfo objectForKey:@"ExpirationDateKey"];
+        _sinaweibo.userID = [sinaweiboInfo objectForKey:@"UserIDKey"];
+    }
+}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
