@@ -28,10 +28,10 @@
     menuCtrl.leftViewController = leftCtrl;
     menuCtrl.rightViewController = rightCtrl;
 
-    
+    [self _initWeibo];
     self.window.rootViewController = menuCtrl;
     [menuCtrl release];
-    [self _initWeibo];
+  
     return YES;
 }
 

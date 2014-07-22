@@ -35,6 +35,18 @@
     // Do any additional setup after loading the view.
 }
 
+//override
+-(void)setTitle:(NSString *)title{
+    [super setTitle:title];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = title;
+    [titleLabel sizeToFit];
+    self.navigationItem.titleView = titleLabel;
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

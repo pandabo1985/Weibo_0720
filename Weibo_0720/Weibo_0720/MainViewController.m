@@ -88,11 +88,23 @@
 - (void)sinaweiboDidLogIn:(SinaWeibo *)sinaweibo
 {
     NSLog(@"sinaweiboDidLogIn");
+    //保存认证的数据到本地
+    NSDictionary *authData = [NSDictionary dictionaryWithObjectsAndKeys:
+                              sinaweibo.accessToken, @"AccessTokenKey",
+                              sinaweibo.expirationDate, @"ExpirationDateKey",
+                              sinaweibo.userID, @"UserIDKey",
+                              sinaweibo.refreshToken, @"refresh_token", nil];
+    [[NSUserDefaults standardUserDefaults] setObject:authData forKey:@"SinaWeiboAuthData"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 - (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo{
     NSLog(@"sinaweiboDidLogOut");
+    //移除认证的数据
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SinaWeiboAuthData"];
 }
 - (void)sinaweiboLogInDidCancel:(SinaWeibo *)sinaweibo{
         NSLog(@"sinaweiboLogInDidCancel");
 }
+
+
 @end
