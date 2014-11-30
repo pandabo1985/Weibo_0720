@@ -8,6 +8,8 @@
 
 #import "UIUtils.h"
 #import <CommonCrypto/CommonDigest.h>
+#import "NSString+URLEncoding.h"
+#import "RegexKitLite.h"
 
 @implementation UIUtils
 
@@ -44,6 +46,31 @@
     NSString *formate = @"E MMM d HH:mm:ss Z yyyy";
     NSDate *createDate = [UIUtils dateFromFomate:datestring formate:formate];
     NSString *text = [UIUtils stringFromFomate:createDate formate:@"MM-dd HH:mm"];
+    return text;
+}
+
++(NSString *)parseLink:(NSString *)text{
+    NSString *regex = @"(@\\w+)|(#\\w+#)|(http(s)?://([A-Za-z0-9._]+(/)?)*)";
+    NSArray *matchaArray = [text componentsMatchedByRegex:regex];
+    
+    for (NSString *linkString in matchaArray) {
+        
+        NSString *repels = nil;
+        if ([linkString hasPrefix:@"@"]) {
+            repels = [NSString stringWithFormat:@"<a href='user'://%@>%@</a>",   [linkString URLEncodedString],linkString];
+        }else if([linkString hasPrefix:@"http"]){
+            
+            repels = [NSString stringWithFormat:@"<a href='%@‘>%@</a>",   [linkString URLEncodedString],linkString];
+        }else if([linkString hasPrefix:@"#"]){
+            
+            repels = [NSString stringWithFormat:@"<a href='topic'://%@>%@</a>",   [linkString URLEncodedString],linkString];
+        }
+        if (repels !=nil) {
+            text = [text stringByReplacingOccurrencesOfString:linkString withString:repels];
+        }
+        
+    }
+
     return text;
 }
 

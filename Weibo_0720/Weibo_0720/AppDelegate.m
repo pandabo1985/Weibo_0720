@@ -13,6 +13,7 @@
 #import "RightViewController.h"
 #import "SinaWeibo.h"
 #import "CONSTS.h"
+#import "ThemeManager.h"
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -21,18 +22,25 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+    [self setTheme];
+    
     _mainCtrl = [[MainViewController alloc] init];
     LeftViewController *leftCtrl =[[LeftViewController alloc] init];
     RightViewController *rightCtrl = [[RightViewController alloc] init];
-    DDMenuController *menuCtrl = [[DDMenuController alloc] initWithRootViewController:_mainCtrl];
-    menuCtrl.leftViewController = leftCtrl;
-    menuCtrl.rightViewController = rightCtrl;
+    _menuCtrl = [[DDMenuController alloc] initWithRootViewController:_mainCtrl];
+    _menuCtrl.leftViewController = leftCtrl;
+    _menuCtrl.rightViewController = rightCtrl;
 
     [self _initWeibo];
-    self.window.rootViewController = menuCtrl;
-    [menuCtrl release];
+    self.window.rootViewController = _menuCtrl;
+    [_menuCtrl release];
   
     return YES;
+}
+
+-(void)setTheme{
+    NSString *themeName = [[NSUserDefaults standardUserDefaults] objectForKey:kThemeName];
+    [[ThemeManager shareInstance] setThemeName:themeName];
 }
 
 -(void)_initWeibo{

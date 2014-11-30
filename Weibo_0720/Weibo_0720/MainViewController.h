@@ -10,7 +10,14 @@
 #import <UIKit/UIKit.h>
 #import "SinaWeibo.h"
 
-@interface MainViewController : UITabBarController<SinaWeiboDelegate>{
+@class HomeViewController;
+@interface MainViewController : UITabBarController<SinaWeiboDelegate,UINavigationControllerDelegate>{
     UIView *_tabbarView;
+    UIImageView *_sliderView;
+    UIImageView *_badgeView;
+    HomeViewController *_homeCtrl;
 }
+
+-(void)showBadge:(BOOL)show;
+-(void)showTabbr:(BOOL)show;
 @end

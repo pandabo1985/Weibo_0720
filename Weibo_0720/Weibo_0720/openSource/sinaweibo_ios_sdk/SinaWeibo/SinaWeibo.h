@@ -68,6 +68,11 @@
                              params:(NSMutableDictionary *)params
                          httpMethod:(NSString *)httpMethod
                            delegate:(id<SinaWeiboRequestDelegate>)delegate;
+//===panda
+- (SinaWeiboRequest*)requestWithURL:(NSString *)url
+                             params:(NSMutableDictionary *)params
+                         httpMethod:(NSString *)httpMethod
+                           block:(RequestFinishBlock)block;
 
 @end
 
