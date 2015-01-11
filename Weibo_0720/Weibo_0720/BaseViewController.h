@@ -8,14 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "SinaWeibo.h"
+#import "AppDelegate.h"
 
 
-@class AppDelegate;
 @class MBProgressHUD;
 @interface BaseViewController : UIViewController{
     UIView *_loadView;
+    UIWindow *_tipWindow;
 }
 @property(nonatomic,assign) BOOL isbackButton;
+@property(nonatomic, assign) BOOL isCancelButton;
 @property(nonatomic,retain)MBProgressHUD *hub;
 
 -(SinaWeibo *)sinaweibo;
@@ -24,5 +26,8 @@
 -(void)showHud;
 -(void)hideHud;
 -(AppDelegate *)appDelegate;
+
+//状态栏提示
+-(void)showStatusTip:(BOOL)show title:(NSString *)title;
 
 @end

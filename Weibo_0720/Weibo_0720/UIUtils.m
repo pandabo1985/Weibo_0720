@@ -60,7 +60,7 @@
             repels = [NSString stringWithFormat:@"<a href='user'://%@>%@</a>",   [linkString URLEncodedString],linkString];
         }else if([linkString hasPrefix:@"http"]){
             
-            repels = [NSString stringWithFormat:@"<a href='%@‘>%@</a>",   [linkString URLEncodedString],linkString];
+            repels = [NSString stringWithFormat:@"<a href='http'://%@>%@</a>",   [linkString URLEncodedString],linkString];
         }else if([linkString hasPrefix:@"#"]){
             
             repels = [NSString stringWithFormat:@"<a href='topic'://%@>%@</a>",   [linkString URLEncodedString],linkString];

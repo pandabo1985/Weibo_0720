@@ -11,6 +11,7 @@
 #import "WeiboTableView.h"
 #import "UserModel.h"
 #import "UIFactory.h"
+#import "WeiBoModel.h"
 
 @interface UserViewController ()
 
@@ -30,6 +31,7 @@
     self.navigationItem.rightBarButtonItem = [homeItem autorelease];
     
     [self loadUserData];
+    [self loadWeiboData];
 }
 
 -(void)goHome{
@@ -55,6 +57,34 @@
     UserModel *userModel = [[UserModel alloc] initWithDataDic:result];
     self.userInfo.user = userModel;
     self.tableView.tableHeaderView = _userInfo;
+}
+//获取用户微博发表的微博列表
+-(void)loadWeiboData{
+    if (self.userName.length==0) {
+        return;
+    }
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:self.userName forKey:@"screen_name"];
+    [self.sinaweibo requestWithURL:@"statuses/user_timeline.json" params:params httpMethod:@"GET" block:^(id result){
+        [self loadWeiboDataFinished:result];
+    }];
+}
+
+-(void)loadWeiboDataFinished:(NSDictionary *)result{
+    NSArray *statuses = [result objectForKey:@"statuses"];
+    NSMutableArray *weibos = [NSMutableArray arrayWithCapacity:statuses.count];
+    for (NSDictionary *dic in statuses) {
+        WeiboModel *weiboModel = [[WeiboModel alloc] initWithDataDic:dic];
+        [weibos addObject:weiboModel];
+        [weiboModel release];
+    }
+    
+    self.tableView.data = weibos;
+    if (weibos.count>=20) {
+        self.tableView.isMore = YES;
+    }else{
+        self.tableView.isMore = NO;
+    }
+    [self.tableView reloadData];
 }
 
 - (void)dealloc {

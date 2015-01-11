@@ -51,6 +51,8 @@
     }else{
         [self.sinaweibo logIn];
     }
+
+
 }
 
 #pragma mark -load data
@@ -233,6 +235,8 @@
     detail.weiboModel = weibo;
     [self.navigationController pushViewController:detail animated:YES];
     [detail release];
+    //取消选中
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
 #pragma mark -action

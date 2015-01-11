@@ -7,6 +7,8 @@
 //
 
 #import "RightViewController.h"
+#import "SendViewController.h"
+#import "BaseNavigationViewController.h"
 
 @interface RightViewController ()
 
@@ -35,4 +37,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)sendAction:(UIButton *)sender {
+    if (sender.tag==100) {
+        SendViewController *sendCtrl = [[SendViewController alloc] init];
+        BaseNavigationViewController *sendNav = [[BaseNavigationViewController alloc] initWithRootViewController:sendCtrl];
+        [self.appDelegate.menuCtrl presentViewController:sendNav animated:YES completion:NULL];
+//        [self presentViewController:sendNav animated:YES completion:NULL];
+        [sendCtrl release];
+        [sendNav release];
+        
+    }
+}
 @end

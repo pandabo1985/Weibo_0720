@@ -10,6 +10,10 @@
 
 @interface ThemeButton : UIButton
 
+//设置图片拉伸的位置
+@property(nonatomic, assign)int LeftCapWidth;//横向离原点的位置
+@property(nonatomic, assign)int topCapHeight;
+
 @property(nonatomic,copy)NSString *imageName;
 @property(nonatomic,copy)NSString *highligtImageName;
 

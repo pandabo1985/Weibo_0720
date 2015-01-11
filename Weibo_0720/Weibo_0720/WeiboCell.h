@@ -10,9 +10,11 @@
 
 @class WeiboModel;
 @class WeiboView;
+@class WXImageView;
 
 @interface WeiboCell : UITableViewCell{
-    UIImageView *_userImage;
+//    UIImageView *_userImage;
+    WXImageView *_userImage;
     UILabel *_nickLabel;
     UILabel *_repostCountLabel;
     UILabel *_commentLabel;

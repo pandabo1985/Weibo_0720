@@ -15,6 +15,7 @@
 #import "UIUtils.h"
 #import "UserViewController.h"
 #import "UserModel.h"
+#import "WebViewController.h"
 
 #define LIST_FONT 14.0f //列表中字体
 #define LIST_REPOST_FONT 13.0f//列表中转发的文本字体
@@ -267,7 +268,11 @@
         [self.viewController.navigationController pushViewController:userCtrl animated:YES];
         NSLog(@"用户：%@",urlstring);
     }else if ([absoluteString hasPrefix:@"http"]){
-        NSLog(@"链接：%@",[absoluteString URLDecodedString]);
+        NSString *urlstring = [url host];
+        NSLog(@"链接：%@",urlstring);
+        WebViewController *webView = [[WebViewController alloc] initWithUrl:urlstring];
+        [self.viewController.navigationController pushViewController:webView animated:YES];
+        [webView release];
         
     }else if([absoluteString hasPrefix:@"topic"]){
         NSString *urlstring = [url host];

@@ -13,6 +13,8 @@
 #import "UIUtils.h"
 #import "RegexKitLite.h"
 #import "UserViewController.h"
+#import "WXImageView.h"
+#import "UserViewController.h"
 
 @implementation WeiboCell
 
@@ -25,14 +27,29 @@
     return self;
 }
 
+-(void)setWeiboModel:(WeiboModel *)weiboModel{
+    if (_weiboModel!=weiboModel) {
+        [_weiboModel release];
+        _weiboModel = [weiboModel retain];
+    }
+    __block WeiboCell *this = self;
+    _userImage.touchBlock= ^{
+        NSString *nickName = this
+        .weiboModel.user.screen_name;
+        UserViewController *userCtrl = [[UserViewController alloc] init];
+        userCtrl.userName = nickName;
+        [this.viewController.navigationController pushViewController:userCtrl animated:YES];
+    };
+}
 
 -(void)_initView{
-    _userImage = [[UIImageView alloc] initWithFrame:CGRectZero];
+    _userImage = [[WXImageView alloc] initWithFrame:CGRectZero];
     _userImage.backgroundColor = [UIColor clearColor];
     _userImage.layer.cornerRadius = 5;
     _userImage.layer.borderWidth=.5;
     _userImage.layer.borderColor = [UIColor grayColor].CGColor;
     _userImage.layer.masksToBounds = YES;
+  
     [self.contentView addSubview:_userImage];
     _userImage.userInteractionEnabled = YES;
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onClickUserImage)];

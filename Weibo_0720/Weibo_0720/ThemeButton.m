@@ -47,15 +47,28 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kThemeDidchangedNotification object:nil];
     [super dealloc];
 }
+
+-(void)setLeftCapWidth:(int)LeftCapWidth{//复写，为了拉伸
+    _LeftCapWidth = LeftCapWidth;
+    [self loadImage];
+}
+-(void)setTopCapHeight:(int)topCapHeight{
+    _topCapHeight = topCapHeight;
+    [self loadImage];
+}
 -(void)loadImage{
     ThemeManager *themeManager = [ThemeManager shareInstance];
     UIImage *image = [themeManager getThemeImage:_imageName];
+    image = [image stretchableImageWithLeftCapWidth:self.LeftCapWidth topCapHeight:self.topCapHeight];
     UIImage *highlight = [themeManager getThemeImage:_highligtImageName];
+     highlight = [highlight stretchableImageWithLeftCapWidth:self.LeftCapWidth topCapHeight:self.topCapHeight];
     [self setImage:image forState:UIControlStateNormal];
     [self setImage:highlight forState:UIControlStateHighlighted];
     
     UIImage *backgroudImage = [themeManager getThemeImage:_backgroudImageName];
+      backgroudImage = [backgroudImage stretchableImageWithLeftCapWidth:self.LeftCapWidth topCapHeight:self.topCapHeight];
     UIImage *backgroudHighlightImage = [themeManager getThemeImage:_backgroudHighlightImageName];
+        backgroudHighlightImage = [backgroudHighlightImage stretchableImageWithLeftCapWidth:self.LeftCapWidth topCapHeight:self.topCapHeight];
     [self setBackgroundImage: backgroudImage forState:UIControlStateNormal];
     [self setBackgroundImage:backgroudHighlightImage forState:UIControlStateHighlighted];
 }

@@ -13,11 +13,14 @@
 
 @interface UIFactory : NSObject
 
+
 +(ThemeButton *)createButton:(NSString *)imageName highlighted:(NSString *)highlightedName;
 
 +(ThemeButton *)createBackgroudButton:(NSString *)imageName backgroudHighlighted:(NSString *)hlightedName;
 
 +(ThemeImageView *)createImageView:(NSString *)imageName;
 +(ThemeLabel *)createLabel:(NSString *)colorName;
+
++(UIButton *)createNavigationButton:(CGRect)frame title:(NSString *)title target:(id)target action:(SEL) action;
 
 @end
